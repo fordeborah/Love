@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I love Deborah so much,I made this simple website for her</title>
+    <title>I love Deborah so much, I made this simple website for her</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -122,7 +122,6 @@
 
     <script>
         const messages = {
-        
             "2024-06-21": "Enjoy the long days!",
             "2024-06-22": "Relax and unwind today.",
             "2024-06-24": " ",
@@ -135,7 +134,8 @@
             if (password === '28012024') {
                 document.getElementById('login-page').classList.add('hidden');
                 document.getElementById('content-page').classList.remove('hidden');
-                showDateAndMessage(new Date().toISOString().split('T')[0]);
+                const nigeriaTime = new Date().toLocaleString("en-US", { timeZone: "Africa/Lagos" });
+                showDateAndMessage(new Date(nigeriaTime).toISOString().split('T')[0]);
             } else {
                 alert('Incorrect Password');
             }
@@ -145,7 +145,8 @@
             const formattedDate = formatDate(selectedDate);
             document.getElementById('date').textContent = formattedDate;
 
-            const today = new Date().toISOString().split('T')[0];
+            const nigeriaTime = new Date().toLocaleString("en-US", { timeZone: "Africa/Lagos" });
+            const today = new Date(nigeriaTime).toISOString().split('T')[0];
             if (selectedDate > today) {
                 document.getElementById('message').textContent = 'No message yet.';
                 document.getElementById('reply-input-section').classList.add('hidden');
@@ -242,7 +243,7 @@
         function getOrdinalSuffix(day) {
             if (day > 3 && day < 21) return 'th';
             switch (day % 10) {
-            case 1: return 'st';
+                case 1: return 'st';
                 case 2: return 'nd';
                 case 3: return 'rd';
                 default: return 'th';
@@ -250,7 +251,8 @@
         }
 
         window.onload = function() {
-            const today = new Date().toISOString().split('T')[0];
+            const nigeriaTime = new Date().toLocaleString("en-US", { timeZone: "Africa/Lagos" });
+            const today = new Date(nigeriaTime).toISOString().split('T')[0];
             document.getElementById('date').textContent = formatDate(today);
             if (messages[today]) {
                 document.getElementById('message').textContent = messages[today];
