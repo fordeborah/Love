@@ -134,8 +134,10 @@
             if (password === '28012024') {
                 document.getElementById('login-page').classList.add('hidden');
                 document.getElementById('content-page').classList.remove('hidden');
-                const nigeriaTime = new Date().toLocaleString("en-US", { timeZone: "Africa/Lagos" });
-                showDateAndMessage(new Date(nigeriaTime).toISOString().split('T')[0]);
+                const utcDate = new Date();
+                const nigeriaOffset = 60; // Nigeria is UTC+1 (60 minutes ahead of UTC)
+                const nigeriaLocalDate = new Date(utcDate.getTime() + nigeriaOffset * 60000);
+                showDateAndMessage(nigeriaLocalDate.toISOString().split('T')[0]);
             } else {
                 alert('Incorrect Password');
             }
@@ -145,8 +147,10 @@
             const formattedDate = formatDate(selectedDate);
             document.getElementById('date').textContent = formattedDate;
 
-            const nigeriaTime = new Date().toLocaleString("en-US", { timeZone: "Africa/Lagos" });
-            const today = new Date(nigeriaTime).toISOString().split('T')[0];
+            const utcDate = new Date();
+            const nigeriaOffset = 60; // Nigeria is UTC+1 (60 minutes ahead of UTC)
+            const nigeriaLocalDate = new Date(utcDate.getTime() + nigeriaOffset * 60000);
+            const today = nigeriaLocalDate.toISOString().split('T')[0];
             if (selectedDate > today) {
                 document.getElementById('message').textContent = 'No message yet.';
                 document.getElementById('reply-input-section').classList.add('hidden');
@@ -228,6 +232,7 @@
         function deleteReply(date, index) {
             const replies = JSON.parse(localStorage.getItem(date)) || [];
             replies.splice(index, 1);
+            localStorage.setreplies.splice(index, 1);
             localStorage.setItem(date, JSON.stringify(replies));
             displayReplies(date);
         }
@@ -251,8 +256,10 @@
         }
 
         window.onload = function() {
-            const nigeriaTime = new Date().toLocaleString("en-US", { timeZone: "Africa/Lagos" });
-            const today = new Date(nigeriaTime).toISOString().split('T')[0];
+            const utcDate = new Date();
+            const nigeriaOffset = 60; // Nigeria is UTC+1 (60 minutes ahead of UTC)
+            const nigeriaLocalDate = new Date(utcDate.getTime() + nigeriaOffset * 60000);
+            const today = nigeriaLocalDate.toISOString().split('T')[0];
             document.getElementById('date').textContent = formatDate(today);
             if (messages[today]) {
                 document.getElementById('message').textContent = messages[today];
