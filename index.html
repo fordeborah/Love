@@ -224,7 +224,7 @@
                 case 1: return 'st';
                 case 2: return 'nd';
                 case 3: return 'rd';
-                default: return 'th';
+default: return 'th';
             }
         }
 
@@ -232,7 +232,7 @@
             const utcDate = new Date();
             const nigeriaOffset = 60; // Nigeria is UTC+1 (60 minutes ahead of UTC)
             const nigeriaLocalDate = new Date(utcDate.getTime() + nigeriaOffset * 60000);
-const today = nigeriaLocalDate.toISOString().split('T')[0];
+            const today = nigeriaLocalDate.toISOString().split('T')[0];
             document.getElementById('date').textContent = formatDate(today);
             if (messages[today]) {
                 document.getElementById('message').textContent = messages[today];
