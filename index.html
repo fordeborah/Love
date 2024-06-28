@@ -73,9 +73,8 @@
         }
 
         .reply button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
+            display: none;
+            margin-top: 10px;
             background-color: #f0f8ff;
             color: #008cba;
             border: none;
@@ -125,11 +124,7 @@
             "2024-06-21": "Enjoy the long days!",
             "2024-06-22": "Relax and unwind today.",
             "2024-06-24": " ",
-            "2024-06-28": "Happy 5th month anniversary!! It's been 5 months now since our conversation at campus 2 close to the almond tree. I remember the first day I told you I have feelings for you, it was difficult, we walked from my place to almost your house before I could barely say it, little did I know how that moment would change my life forever filling it with love and joy.
-
-\n\n\nI love the times we spent at the library - including the times when I'll ask you to say something to keep the conversation going and you'll say you don't have anything to say and we'll just be staring at each other in silence, our walks around campus 2, our walks to Benitta's place, holding hands, your visits, and the times we spent together online.
-
-\n\nIt feels like a dream sharing these memories with the girl of my dreams. Your love and support means a lot and I'm sorry for the times I doubted. 5 months in, forever left to go, I love you so much."
+            "2024-06-28": "Happy 5th month anniversary!! It's been 5 months now since our conversation at campus 2 close to the almond tree. I remember the first day I told you I have feelings for you, it was difficult, we walked from my place to almost your house before I could barely say it, little did I know how that moment would change my life forever filling it with love and joy.\n\n\nI love the times we spent at the library - including the times when I'll ask you to say something to keep the conversation going and you'll say you don't have anything to say and we'll just be staring at each other in silence, our walks around campus 2, our walks to Benita's place, holding hands, your visits, and the times we spent together online.\n\nIt feels like a dream sharing these memories with the girl of my dreams. Your love and support means a lot and I'm sorry for the times I doubted. 5 months in, forever left to go, I love you so much."
             // Add more messages for specific past dates here
         };
 
@@ -184,10 +179,13 @@
                 replyDiv.className = 'reply';
                 replyDiv.innerHTML = `
                     <p>${reply}</p>
-                    <button onclick="editReply('${date}', ${index})">Edit</button>
                     <button onclick="deleteReply('${date}', ${index})">Delete</button>
                 `;
                 repliesDiv.appendChild(replyDiv);
+                // Show the delete button only after the reply has been added to the DOM
+                setTimeout(() => {
+                    replyDiv.querySelector('button').style.display = 'block';
+                }, 100);
             });
         }
 
@@ -205,38 +203,9 @@
             }
         }
 
-        function editReply(date, index) {
-            const replies = JSON.parse(localStorage.getItem(date)) || [];
-            const replyDiv = document.querySelector(`#replies .reply:nth-child(${index + 1})`);
-            const currentReply = replies[index];
-            replyDiv.innerHTML = `
-                <div class="edit-mode">
-                    <textarea>${currentReply}</textarea>
-                    <button onclick="saveEditedReply('${date}', ${index})">Save</button>
-                    <button onclick="cancelEditReply('${date}', ${index})">Cancel</button>
-                </div>
-            `;
-        }
-
-        function saveEditedReply(date, index) {
-            const replies = JSON.parse(localStorage.getItem(date)) || [];
-            const replyDiv = document.querySelector(`#replies .reply:nth-child(${index + 1})`);
-            const newReply = replyDiv.querySelector('textarea').value.trim();
-            if (newReply !== "") {
-                replies[index] = newReply;
-                localStorage.setItem(date, JSON.stringify(replies));
-                displayReplies(date);
-            }
-        }
-
-        function cancelEditReply(date, index) {
-            displayReplies(date);
-        }
-
         function deleteReply(date, index) {
             const replies = JSON.parse(localStorage.getItem(date)) || [];
             replies.splice(index, 1);
-            localStorage.setreplies.splice(index, 1);
             localStorage.setItem(date, JSON.stringify(replies));
             displayReplies(date);
         }
@@ -263,7 +232,7 @@
             const utcDate = new Date();
             const nigeriaOffset = 60; // Nigeria is UTC+1 (60 minutes ahead of UTC)
             const nigeriaLocalDate = new Date(utcDate.getTime() + nigeriaOffset * 60000);
-            const today = nigeriaLocalDate.toISOString().split('T')[0];
+const today = nigeriaLocalDate.toISOString().split('T')[0];
             document.getElementById('date').textContent = formatDate(today);
             if (messages[today]) {
                 document.getElementById('message').textContent = messages[today];
